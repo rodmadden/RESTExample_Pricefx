@@ -25,10 +25,10 @@ class ReSTExample {
          String pricelistId = readln {'What is the ID of the pricelist desired ?'}
          */
 
-        def username = 'admin'
-        def password = 'LKEH72F86Uc8'
-        def partition = 'ce-0051'
-        def pricelistId = '10041'
+        def username = 'xxx'
+        def password = 'xxxx'
+        def partition = 'xxxx'
+        def pricelistId = 'xxxx'
 
         username = partition+"/"+username
 
