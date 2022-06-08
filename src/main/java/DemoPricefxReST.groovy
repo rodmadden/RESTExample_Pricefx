@@ -1,10 +1,13 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import javax.swing.JOptionPane
 
 import wslite.http.auth.HTTPBasicAuthorization
 import wslite.rest.RESTClient
 
-class ReSTExample {
+//  see GITHUB https://github.com/rodmadden/RESTExample_Pricefx
+
+class DemoPricefxReST {
 
     // URL info
     String pricefxURL = "https://training.pricefx.eu/pricefx"
@@ -16,34 +19,20 @@ class ReSTExample {
     String path
 
     RESTClient collectRuntimeInfo() {
-        /**
-         def readln = javax.swing.JOptionPane.&showInputDialog
 
-         String username = readln {'What is your partition username?'}
-         String password = readln {'What is your partition password?'}
-         String partition = readln {'What is your partition ( i.e. ce-0014 ) ?'}
-         String pricelistId = readln {'What is the ID of the pricelist desired ?'}
-         */
-
-        def username = 'xxx'
-        def password = 'xxxx'
-        def partition = 'xxxx'
-        def pricelistId = 'xxxx'
+        String username = JOptionPane.showInputDialog ('What is your partition username?','admin')
+        String password = JOptionPane.showInputDialog ('What is your partition password?')
+        String partition = JOptionPane.showInputDialog ('What is your partition ( i.e. ce-0014 ) ?','ce-0051')
+        String pricelistId = JOptionPane.showInputDialog ('What is the ID of the pricelist desired ?','10041')
 
         username = partition+"/"+username
 
         // Build API call
         path = "/" +partition+ "/" +pricefxReSTAPI+ "/" +pricelistId
 
-        println("\npricefxURL:"+pricefxURL)
-        println("username:"+username)
-        println("password:"+password)
-
         def client = new RESTClient(pricefxURL)
 
         client.authorization = new HTTPBasicAuthorization(username, password)
-
-        println("\ncollectRuntimeInfo call complete\n")
 
         return client
     }
@@ -55,8 +44,6 @@ class ReSTExample {
         RESTClient client = collectRuntimeInfo()
 
         // Initiate ReST call
-        println("Initiating ReST call using path: "+path+"\n")
-
         def restResponse = client.post(path: path)
         assert restResponse.statusCode == 200
 
@@ -70,7 +57,7 @@ class ReSTExample {
     }
 
     static void main(String[] args) {
-        ReSTExample hw = new ReSTExample()
+        DemoPricefxReST hw = new DemoPricefxReST()
         hw.runExample()
         System.exit(0)
     }
